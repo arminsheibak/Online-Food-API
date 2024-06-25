@@ -76,8 +76,11 @@ WSGI_APPLICATION = "littlelemon.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "littlelemon",
+        "USER": "root",
+        "PASSWORD": "armin2493",
+        "PORT": 3306,
     }
 }
 
