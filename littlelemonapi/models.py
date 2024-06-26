@@ -25,6 +25,7 @@ class Profile(models.Model):
     class RoleChoice(models.TextChoices):
         CUSTOMER = 'C', _('customer')
         DELIVERY_CREW = 'D', _('delivery_crew')
+        ADMIN = 'A', _('admin')
 
     user = models.OneToOneField(get_user_model(), primary_key=True, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)

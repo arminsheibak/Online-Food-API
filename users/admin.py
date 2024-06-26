@@ -2,12 +2,18 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
+from littlelemonapi.models import Profile
 from .forms import UserChangeForm, UserCreationForm
+
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
 
 
 @admin.register(get_user_model())
 class UserAdmin(BaseUserAdmin):
-    list_display = ["id", "email"]
+    list_display = ["id", "email", 'is_staff', 'is_active']
+    inlines = [ProfileInline]
     ordering = ["id"]
     fieldsets = (
         (None, {"fields": ("email", "password")}),
