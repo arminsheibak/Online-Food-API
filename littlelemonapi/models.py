@@ -7,7 +7,7 @@ from uuid import uuid4
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
         return self.title
