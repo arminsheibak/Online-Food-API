@@ -11,10 +11,15 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.title
+    
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
 class MenuItem(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='menu_items')
+    image = models.ImageField(upload_to='images', default='images/default.jpg')
     price = models.DecimalField(max_digits=6, decimal_places=2)
     description = models.TextField(null=True, blank=True)
 
