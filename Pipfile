@@ -9,6 +9,7 @@ djangorestframework = "*"
 mysqlclient = "*"
 drf-spectacular = "*"
 pillow = "*"
+drf-nested-routers = "*"
 
 [dev-packages]
 
