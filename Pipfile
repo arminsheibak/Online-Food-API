@@ -11,6 +11,7 @@ drf-spectacular = "*"
 pillow = "*"
 drf-nested-routers = "*"
 django-filter = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 
