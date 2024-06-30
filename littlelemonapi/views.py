@@ -3,7 +3,11 @@ from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyM
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import MenuItemFilter
 from .permissions import IsAdminOrReadOnly
+from .paginations import DefaultPagination
 from .models import Category, MenuItem, OrderItem, Cart, CartItem
 from .serializers import CategorySerializer, MenuItemSerializer, SimpleMenuItemSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 
@@ -23,6 +27,11 @@ class MenuItemViewSet(ModelViewSet):
     queryset = MenuItem.objects.select_related('category').all()
     permission_classes = [IsAdminOrReadOnly]
     serializer_class = MenuItemSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = MenuItemFilter
+    pagination_class = DefaultPagination
+    ordering_fields = ['price']
+    search_fields = ['title']
 
     def get_serializer_class(self):
         if self.action == 'list':

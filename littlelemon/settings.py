@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     'drf_spectacular',
+    'django_filters',
     # Local
     "users",
     "littlelemonapi",

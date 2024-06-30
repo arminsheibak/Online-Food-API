@@ -10,6 +10,7 @@ mysqlclient = "*"
 drf-spectacular = "*"
 pillow = "*"
 drf-nested-routers = "*"
+django-filter = "*"
 
 [dev-packages]
 
