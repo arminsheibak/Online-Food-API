@@ -49,7 +49,7 @@ class Profile(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, related_name='orders')
-    delivery_crew = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
+    delivery_crew = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, null=True, blank=True)
     delivered = models.BooleanField(default=False)
     time = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
