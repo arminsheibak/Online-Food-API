@@ -1,15 +1,10 @@
-from .models import Category, MenuItem, Cart, CartItem
+from .models import Category, MenuItem, Cart, CartItem, Profile
 from rest_framework import serializers
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'title']
-
-
-
-
-
 class SimpleMenuItemSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
     class Meta:
@@ -71,3 +66,14 @@ class CartSerializer(serializers.ModelSerializer):
     
     def get_total_price(self, cart):
         return sum([item.menu_item.price * item.quantity for item in cart.items.all()])
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(read_only=True)
+    class Meta:
+        model = Profile
+        fields = ['user_id', 'first_name', 'last_name', 'address', 'phone', 'birth_date']
+    
+    def save(self, **kwargs):
+        user_id = self.context['user_id']
+        self.instance = Profile.objects.create(user_id=user_id, **self.validated_data)
+        return self.instance

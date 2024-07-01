@@ -1,15 +1,16 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import MenuItemFilter
 from .permissions import IsAdminOrReadOnly
 from .paginations import DefaultPagination
-from .models import Category, MenuItem, OrderItem, Cart, CartItem
-from .serializers import CategorySerializer, MenuItemSerializer, SimpleMenuItemSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
+from .models import Category, MenuItem, OrderItem, Cart, CartItem, Profile
+from .serializers import CategorySerializer, MenuItemSerializer, SimpleMenuItemSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, ProfileSerializer
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
@@ -69,3 +70,22 @@ class CartItemViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {"cart_id": self.kwargs["cart_pk"]}
+
+class ProfileViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        (profile, created) = Profile.objects.get_or_create(user_id=request.user.id)
+        if request.method == 'GET':
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = ProfileSerializer(profile, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+    
+    def get_serializer_context(self):
+        return {'user_id': self.request.user.id}
