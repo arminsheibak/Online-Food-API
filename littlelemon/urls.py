@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    path('', TemplateView.as_view(template_name='index.html'))
 ]
 
 if settings.DEBUG:

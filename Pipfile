@@ -14,6 +14,8 @@ django-filter = "*"
 django-debug-toolbar = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 
