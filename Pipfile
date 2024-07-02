@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
-mysqlclient = "*"
 drf-spectacular = "*"
 pillow = "*"
 drf-nested-routers = "*"
@@ -16,6 +15,8 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 whitenoise = "*"
 gunicorn = "*"
+environs = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

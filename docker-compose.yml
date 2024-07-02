@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+    web:
+      build: .
+      command: gunicorn littlelemon.wsgi -b 0.0.0.0:8000
+      volumes:
+        - .:/code
+      ports:
+        - 8000:8000
+      depends_on:
+        - db
+      environment:
+        - "DJANGO_SECRET_KEY=django-insecure-tmo=daznnmco@fin^e_xg33alo^#_7k24j-kwrau8dx%mjdmqa"
+        - "DJANGO_DEBUG=True"
+        - "DJANGO_SECURE_SSL_REDIRECT=False" 
+        - "DJANGO_SECURE_HSTS_SECONDS=0" 
+        - "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False" 
+        - "DJANGO_SECURE_HSTS_PRELOAD=False"
+        - "DJANGO_SESSION_COOKIE_SECURE=False" 
+        - "DJANGO_CSRF_COOKIE_SECURE=False"
+        - "DB_HOST=db"
+        - "DB_NAME=littlelemon"
+        - "DB_USER=postgres"
+        - "DB_PASSWORD=supersecretpassword"
+        - "DJANGO_EMAIL_PASSWORD=yhpqctngqgzidrke"
+       
+    db:
+      image: postgres:16
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      environment:
+        - POSTGRES_DB=littlelemon
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=supersecretpassword
+volumes:
+  postgres_data:
